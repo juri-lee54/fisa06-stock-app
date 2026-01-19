@@ -42,8 +42,8 @@ selected_dates = st.sidebar.date_input(
 )
 
 show_candle = st.sidebar.checkbox("개별 기업 캔들차트 표시", value=False)
+show_each_table = st.sidebar.checkbox("개별 기업 데이터프레임 표시", value=False)
 confirm_btn = st.sidebar.button("조회하기")
-
 
 if confirm_btn:
     if not selected_companies:
@@ -163,11 +163,12 @@ if confirm_btn:
                 st.plotly_chart(fig, use_container_width=True)
 
 
-        if st.button("기업별 데이터테이블 보기"):
+        if show_each_table: 
             st.markdown( '---' )
             for company, df in price_data.items():
-                st.write(df)
+                st.subheader(f"📋 {company} 데이터프레임")
                 st.dataframe(df.tail(10), use_container_width=True)
+
 
         # 엑셀 다운로드 
         output = BytesIO()
